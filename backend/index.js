@@ -18,6 +18,11 @@ function writeTasks(tasks) {
   return fs.writeJson(DB_FILE, tasks);
 }
 
+app.get('/', (req, res) => {
+  res.send('Task API ishlayapti!');
+});
+
+
 // Barcha vazifalarni olish
 app.get('/tasks', async (req, res) => {
   const tasks = await readTasks();
