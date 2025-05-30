@@ -2,7 +2,7 @@
 const API_URL = 'http://13.53.206.222/api';
 
 // Global variables
-let tasks = [{ id: 1, text: 'Vazifa 1', completed: false }];
+let tasks = [];
 let isLoading = false;
 
 // DOM elements
@@ -98,11 +98,13 @@ async function loadTasks() {
         }
         
         tasks = response.data || [];
+        updateConnectionStatus(true);
         updateStats();
         updateDisplay();
         
     } catch (error) {
         console.error('Xatolik:', error);
+        updateConnectionStatus(false);
         showErrorState();
         showToast('Ma\'lumotni yuklashda xatolik yuz berdi', 'error');
     } finally {
@@ -168,6 +170,7 @@ async function deleteTask(id) {
         
     } catch (error) {
         console.error('Xatolik:', error);
+        updateConnectionStatus(false);
         showToast('Vazifani o\'chirishda xatolik yuz berdi', 'error');
         // Revert optimistic update
         if (taskElement) {
@@ -273,7 +276,6 @@ function escapeHtml(text) {
     div.textContent = text;
     return div.innerHTML;
 }
-
 
 
 // Handle online/offline events
