@@ -35,7 +35,7 @@ app.post('/tasks', async (req, res) => {
   const newTask = { id: Date.now(), text: req.body.text };
   tasks.push(newTask);
   await writeTasks(tasks);
-  res.json(newTask);
+  res.status(201).json(newTask);
 });
 
 // Vazifani o‘chirish
