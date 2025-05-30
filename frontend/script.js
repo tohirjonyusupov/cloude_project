@@ -10,7 +10,7 @@
       const tasks = res.data;
       const list = document.getElementById('taskList');
       list.innerHTML = '';
-      tasks.forEach(task => {
+      tasks?.forEach(task => {
         const li = document.createElement('li');
         li.textContent = task.text;
         const btn = document.createElement('button');
