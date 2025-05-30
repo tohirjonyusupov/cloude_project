@@ -6,7 +6,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: '*', // xavfsizlik uchun bu yerga frontend domenini yozish mumkin
+  methods: ['GET', 'POST', 'DELETE']
+}));
+
 app.use(express.json());
 
 // Asosiy route
