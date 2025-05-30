@@ -1,8 +1,11 @@
-  const API_URL = 'http://13.53.206.222/tasks'; // IP manzilni moslang
+  const API_URL = 'http://13.53.206.222'; // IP manzilni moslang
 
   async function loadTasks() {
     try {
-      const res = await axios.get(API_URL);
+      const res = await axios.get(`${API_URL}/tasks`);
+      if (res.status !== 200) {
+        throw new Error('Serverdan ma\'lumot olishda xatolik');
+      }
       const tasks = res.data;
       const list = document.getElementById('taskList');
       list.innerHTML = '';
@@ -29,7 +32,7 @@
       return;
     }
     try {
-      await axios.post(API_URL, { text });
+      await axios.post(`${API_URL}/tasks`, { text });
       input.value = '';
       loadTasks();
     } catch (error) {
@@ -40,7 +43,7 @@
 
   async function deleteTask(id) {
     try {
-      await axios.delete(`${API_URL}/${id}`);
+      await axios.delete(`${API_URL}/tasks/${id}`);
       loadTasks();
     } catch (error) {
       console.error('Xatolik:', error);
