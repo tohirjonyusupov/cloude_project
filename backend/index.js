@@ -22,6 +22,9 @@ app.get('/', (req, res) => {
 app.get('/tasks', async (req, res) => {
   try {
     const tasks = await pool.query('SELECT * FROM todos ORDER BY id ASC');
+    if (tasks.rows.length === 0) {
+      return res.status(404).json({ success: false, message: 'Vazifalar topilmadi' });
+    }
     res.status(200).json(tasks.rows);
   } catch (err) {
     console.error('GET /tasks error:', err.message);
