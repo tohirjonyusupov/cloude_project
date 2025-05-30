@@ -1,22 +1,13 @@
 const express = require('express');
 const cors = require('cors');
-const fs = require('fs-extra');
 const app = express();
-const PORT = 3000;
-const DB_FILE = __dirname + '/db.json';
+
+const pool = require('./db'); // Postgres ulanishi
 
 app.use(cors());
 app.use(express.json());
 
-// Ma'lumotlarni o'qish
-function readTasks() {
-  return fs.readJson(DB_FILE).catch(() => []);
-}
-
-// Ma'lumotlarni saqlash
-function writeTasks(tasks) {
-  return fs.writeJson(DB_FILE, tasks);
-}
+const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
   res.send('Task API ishlayapti!');
@@ -25,26 +16,21 @@ app.get('/', (req, res) => {
 
 // Barcha vazifalarni olish
 app.get('/tasks', async (req, res) => {
-  const tasks = await readTasks();
-  res.json(tasks);
+  const tasks = await pool.query('SELECT * FROM todos ORDER BY id ASC'); // Postgresdan ma'lumot olish
+  res.status(200).json(tasks.rows); // JSON formatida qaytarish
 });
 
 // Yangi vazifa qo'shish
 app.post('/tasks', async (req, res) => {
-  const tasks = await readTasks();
-  const newTask = { id: Date.now(), text: req.body.text };
-  tasks.push(newTask);
-  await writeTasks(tasks);
-  res.status(201).json(newTask);
+  await pool.query(`INSERT INTO todos (text) VALUES ($1)`, [req.body.text]); // Postgresga qo'shish
+  res.status(201).json({ success: true, message: 'Vazifa qo\'shildi' });
 });
 
 // Vazifani o‘chirish
 app.delete('/tasks/:id', async (req, res) => {
   const id = parseInt(req.params.id);
-  let tasks = await readTasks();
-  tasks = tasks.filter(t => t.id !== id);
-  await writeTasks(tasks);
-  res.json({ success: true });
+  await pool.query('DELETE FROM todos WHERE id = $1', [id]); // Postgresdan o'chirish
+  res.status(200).json({ success: true, message: 'Vazifa o\'chirildi' });
 });
 
 app.listen(PORT, () => {
