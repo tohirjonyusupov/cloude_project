@@ -22,7 +22,8 @@ app.get('/tasks', async (req, res) => {
 
 // Yangi vazifa qo'shish
 app.post('/tasks', async (req, res) => {
-  await pool.query(`INSERT INTO todos (text) VALUES ($1)`, [req.body.text]); // Postgresga qo'shish
+  const text = req.body.text;
+  await pool.query(`INSERT INTO todos (text) VALUES ($1)`, [text]); // Postgresga qo'shish
   res.status(201).json({ success: true, message: 'Vazifa qo\'shildi' });
 });
 
