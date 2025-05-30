@@ -1,4 +1,4 @@
-  const API_URL = 'http://13.53.206.222'; // IP manzilni moslang
+  const API_URL = 'http://13.53.206.222/api'; // IP manzilni moslang
 
 
   async function loadTasks() {
