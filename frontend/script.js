@@ -33,6 +33,8 @@
     }
     try {
       await axios.post(`${API_URL}/tasks`, { text });
+      // Yangi vazifa qo'shilgandan so'ng, input maydonini tozalash va vazifalarni qayta yuklash
+      alert("Vazifa qo'shildi");
       input.value = '';
       loadTasks();
     } catch (error) {
