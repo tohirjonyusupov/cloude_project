@@ -20,6 +20,7 @@ app.get('/', (req, res) => {
 
 // Barcha vazifalarni olish
 app.get('/tasks', async (req, res) => {
+  console.log("Deployed to AWS");
   try {
     const tasks = await pool.query('SELECT * FROM todos ORDER BY id ASC');
     if (tasks.rows.length === 0) {
@@ -32,7 +33,6 @@ app.get('/tasks', async (req, res) => {
   }
 });
 
-console.log("Deployed to AWS");
 
 
 // Yangi vazifa qo'shish
