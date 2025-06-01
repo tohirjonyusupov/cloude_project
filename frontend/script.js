@@ -97,7 +97,7 @@ async function loadTasks() {
             throw new Error('Serverdan ma\'lumot olishda xatolik');
         }
         
-        tasks = response.data || [];
+        tasks = response.data.tasks || [];
         updateConnectionStatus(true);
         updateStats();
         updateDisplay();
