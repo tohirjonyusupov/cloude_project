@@ -209,7 +209,7 @@ async function toggleTask(id) {
 // Update statistics
 function updateStats() {
     const total = tasks.length;
-    const completed = tasks.filter(t => t.completed).length;
+    const completed = tasks?.filter(t => t.completed).length;
     const remaining = total - completed;
     const percentage = total > 0 ? (completed / total) * 100 : 0;
     
