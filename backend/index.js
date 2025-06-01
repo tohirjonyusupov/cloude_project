@@ -21,12 +21,11 @@ app.get('/', (req, res) => {
 // Barcha vazifalarni olish
 app.get('/tasks', async (req, res) => {
   try {
-    console.log("Deployed to AWS");
     const tasks = await pool.query('SELECT * FROM todos ORDER BY id ASC');
     if (tasks.rows.length === 0) {
       return res.status(404).json({ success: false, message: 'Vazifalar topilmadi' });
     }
-    res.status(200).json(tasks.rows);
+    res.status(200).json({message: 'Vazifalar muvaffaqiyatli olindi', tasks: tasks.rows, success: true });
   } catch (err) {
     console.error('GET /tasks error:', err.message);
     res.status(500).json({ success: false, message: 'Vazifalarni olishda xatolik yuz berdi' });
