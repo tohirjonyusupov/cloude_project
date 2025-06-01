@@ -97,7 +97,7 @@ async function loadTasks() {
             throw new Error('Serverdan ma\'lumot olishda xatolik');
         }
         
-        tasks = response.data.tasks || [];
+        tasks = response.data || [];
         updateConnectionStatus(true);
         updateStats();
         updateDisplay();
@@ -209,7 +209,7 @@ async function toggleTask(id) {
 // Update statistics
 function updateStats() {
     const total = tasks.length;
-    const completed = tasks?.filter(t => t.completed).length;
+    const completed = tasks.filter(t => t.completed).length;
     const remaining = total - completed;
     const percentage = total > 0 ? (completed / total) * 100 : 0;
     
