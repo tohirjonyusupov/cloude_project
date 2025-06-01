@@ -32,6 +32,9 @@ app.get('/tasks', async (req, res) => {
   }
 });
 
+console.log("Deployed to AWS");
+
+
 // Yangi vazifa qo'shish
 app.post('/tasks', async (req, res) => {
   try {
