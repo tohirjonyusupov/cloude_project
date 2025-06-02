@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 // Barcha vazifalarni olish
 app.get('/tasks', async (req, res) => {
   try {
-    console.log("Deployed to AWS");
+    console.log("Deployed to AWS again");
     const tasks = await pool.query('SELECT * FROM todos ORDER BY id ASC');
     if (tasks.rows.length === 0) {
       return res.status(404).json({ success: false, message: 'Vazifalar topilmadi' });
