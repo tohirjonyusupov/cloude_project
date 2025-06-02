@@ -1,5 +1,5 @@
 // API Configuration
-const API_URL = 'http://13.53.206.222/api';
+const API_URL = 'http://16.171.146.70/api';
 
 // Global variables
 let tasks = [];
